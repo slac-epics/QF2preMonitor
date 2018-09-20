@@ -1,0 +1,10 @@
+Release: R0-0-0
+         Initial release at SLAC.
+	 Author: Eric Norum
+	 Modifications made by Sonya Hoobler to integrate
+	   into LCLS-II: 
+	   QF2preMonitorApp/Db: Make QF2preMonitorLCLS2.substitutions,
+              tailored to LCLS-II conventions. Modify 
+              existing database and substitutions files to 
+              support this (but in such a way that no PV names changed).
+          QF2preMonitorApp/srcArchive: Add archiving configs for LCLS-II 
