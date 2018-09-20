@@ -1,0 +1,73 @@
+#===========================================================
+#
+#  Abs:  LCLS-II QF2PRe Archive List
+#
+#  Name: qf2pre_lcls2.tpl-arch
+#
+#  Facility: LCLS-II Facility Controls
+#
+#  Auth: 20-Sep-2018, Sonya Hoobler   (SONYA)
+#  Rev:  dd-mmm-yyyy, First Lastname  (USERNAME)
+#--------------------------------------------------------------
+#  Mod:
+#       dd-mmm-yyyy, First Lastname  (USERNAME
+#          comments
+#
+#==============================================================
+#
+
+$(P)$(R)QF2_Cmd0RetryCount          10              monitor    
+$(P)$(R)QF2_Cmd1RetryCount          10              monitor    
+$(P)$(R)QF2_Cmd2RetryCount          10              monitor    
+$(P)$(R)QF2_Cmd3RetryCount          10              monitor    
+$(P)$(R)QF2_Cmd4RetryCount          10              monitor    
+$(P)$(R)QF2_CmdFailedCount          10              monitor    
+
+$(P)$(R)QF2_KintexTemp   	10		scan
+$(P)$(R)QF2_BoardTemp   	10		scan	   
+$(P)$(R)QF2_TopFMCVAdj    	10		scan 
+$(P)$(R)QF2_FMC3_3V	   	10		scan  
+$(P)$(R)QF2_FMC12V	      	10		scan
+$(P)$(R)QF2_BtmFMCVadj      	10		scan
+$(P)$(R)QF2_LM4628Temp      	10		scan
+$(P)$(R)QF2_Main3_3V	      	10		scan
+$(P)$(R)QF2_KA2_5V	      	10		scan
+$(P)$(R)QF2_KB2_5V	      	10		scan
+$(P)$(R)QF2_Board12V	      	10		scan
+$(P)$(R)QF2_Boot1_2V	      	10		scan
+$(P)$(R)QF2_KAux1_8V	      	10		scan
+$(P)$(R)QF2_KInt1_0V	      	10		scan
+$(P)$(R)QF2_KMgtAVtt	      	10		scan
+$(P)$(R)QF2_KMgtAVccV	      	10		scan
+$(P)$(R)QF2_KMgtAVccAux     	10		scan
+$(P)$(R)QF2_Boot3_3V	      	10		scan
+$(P)$(R)QF2_Main3_3I	      	10		scan
+$(P)$(R)QF2_FMC3_3I	      	10		scan
+$(P)$(R)QF2_FMC12I	      	10		scan
+$(P)$(R)QF2_FMCVAdjI	      	10		scan
+$(P)$(R)QF2_Boot3_3I	      	10		scan
+$(P)$(R)QF2_KInt1_0I	      	10		scan
+$(P)$(R)QF2_KAux1_8I	      	10		scan
+$(P)$(R)QF2_KMgtAVccI	      	10		scan
+$(P)$(R)QF2_Boot1_2I	      	10		scan
+$(P)$(R)QF2_Board12I	      	10		scan
+$(P)$(R)QF2_FanSpeed	      	10		scan
+$(P)$(R)QF2_QSFP1RxPwr1     	10		scan
+$(P)$(R)QF2_QSFP1RxPwr2     	10		scan
+$(P)$(R)QF2_QSFP1RxPwr3     	10		scan
+$(P)$(R)QF2_QSFP1RxPwr4     	10		scan
+$(P)$(R)QF2_QSFP1Temp	      	10		scan
+$(P)$(R)QF2_QSFP1V	      	10		scan
+$(P)$(R)QF2_QSFP2RxPwr1     	10		scan
+$(P)$(R)QF2_QSFP2RxPwr2     	10		scan
+$(P)$(R)QF2_QSFP2RxPwr3     	10		scan
+$(P)$(R)QF2_QSFP2RxPwr4     	10		scan
+$(P)$(R)QF2_QSFP2Temp	      	10		scan
+$(P)$(R)QF2_QSFP2V          	10		scan
+
+$(P)$(R)QF2_I2CError   	10		monitor
+$(P)$(R)QF2_BoardOverTemp   	10		monitor
+$(P)$(R)QF2_KintexOverTemp   	10		monitor
+
+ 
+# End of script

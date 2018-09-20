@@ -1,0 +1,454 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>QF2preMonitor</title>
+  </head>
+  <body>
+    <h1>Introduction</h1>
+    This support module provides an ASYN driver to read board monitoring
+    information from a QF2pre FPGA module.<span style="font-weight:
+      bold;"></span>&nbsp; The module consists of C source an example
+    database and simple EDM engineering screens.&nbsp; <br>
+    <h1>Database Development </h1>
+    <p>The example application distributed with this support module
+      comes with a database containing all the following records and EDM
+      screens to display them.&nbsp; All record names begin with the
+      macros <span style="font-family: monospace;">$(P)$(R)QF2pre:</span>.&nbsp;
+
+      Only the portion of the record names following this prefix are
+      shown in the following tables.&nbsp; All records have
+      DTYP=asynInt32 and INP="@asyn($(PORT) <span style="font-style:
+        italic;">xxx</span>)", where $(PORT) expands to the port name in
+      the qf2preMonitorConfigure command and <span style="font-style:
+        italic;">xxx</span> is a numeric value as described below.&nbsp;<br>
+      <br>
+    </p>
+    <h2>Readback Trigger</h2>
+    <p>Board monitor readout is triggered whenever this binary-in record
+      is processed.&nbsp; Typically SCAN="10 second".&nbsp; The QF2pre
+      system controller FPGA scans the monitor points only once every
+      couple of seconds so there is little reason to scan this record
+      any faster.</p>
+    <table style=" text-align: left; width: 80%; margin-left: auto;
+      margin-right: auto;" border="1" cellspacing="2" cellpadding="2">
+      <tbody>
+        <tr>
+          <td style="text-align: center;"><span style="font-weight:
+              bold;">Name</span><br>
+          </td>
+          <th style="text-align: center;">ASYN<br>
+            Subaddress<br>
+          </th>
+          <th style="vertical-align: middle; text-align: center;">Description<br>
+          </th>
+        </tr>
+        <tr>
+          <td style="text-align: center;">trigger_<br>
+          </td>
+          <td style="text-align: center;">0x00<br>
+          </td>
+          <td style="vertical-align: top;">Sends a monitor readback
+            request to the QF2pre, awaits a reply, then initiates
+            SCAN="I/O Intr" callbacks for all other records.<br>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <h2>Board Monitors<br>
+    </h2>
+    These analog-in records must have SCAN="I/O Intr"and should have
+    TSE="-2" to ensure that all receive the time stamp of the arrival of
+    the readback packet.&nbsp;&nbsp; The least significant 8 bits of the
+    ASYN subaddress are the&nbsp; index into the received packet of the
+    most significant byte of the value.&nbsp; The least significant byte
+    of the value is the following byte.&nbsp; The next three bits of the
+    subaddress are the number of valid bits, minus 1, in the high byte
+    of the value and the next bit of the subaddress is set if the value
+    is signed.&nbsp; All temperature values are in units of degrees
+    Celsius, all voltage values are in units of Volts and all current
+    values are in units of Amperes.<br>
+    <br>
+    <table style=" text-align: left; width: 80%; margin-left: auto;
+      margin-right: auto;" border="1" cellspacing="2" cellpadding="2">
+      <tbody>
+        <tr>
+          <td style="text-align: center;" valign="middle" align="center"><span style="font-weight: bold;">Name</span><br>
+          </td>
+          <td style="vertical-align: top;" valign="middle" align="center"><span style="font-weight: bold;">ASYN</span><span style="font-weight: bold;"><br>
+            </span><span style="font-weight: bold;">Subaddress</span><span style="font-weight: bold;"><br>
+            </span></td>
+          <td style="text-align: center;" valign="middle" align="center"><span style="font-weight: bold;">Desc</span><span style="font-weight: bold;">ription</span><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">K7:temp</td>
+          <td style="text-align: center;">0xB00</td>
+          <td style="text-align: left;">Kintex 7 tempeature sensor.</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">Board:temp</td>
+          <td style="text-align: center;">0xB04<span style="font-style:
+              italic;"></span></td>
+          <td style="text-align: left;">Board temperature sensor.</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">TopFMCVADJ<br>
+          </td>
+          <td style="text-align: center;">0x704<br>
+          </td>
+          <td style="text-align: left;">Top FMC card V<sub>AD</sub><sub>J</sub>
+            supply voltage.<br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">FMC3_3:V<br>
+          </td>
+          <td style="text-align: center;">0x706<br>
+          </td>
+          <td style="text-align: left;">FMC cards 3.3V supply voltage.<br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">FMC12:V<br>
+          </td>
+          <td style="text-align: center;">0x708<br>
+          </td>
+          <td style="text-align: left;">FMC cards 12V supply voltage.</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">BtmFMCVADJ<br>
+          </td>
+          <td style="text-align: center;">0x70A<br>
+          </td>
+          <td style="text-align: left;">Bottom FMC card V<sub>AD</sub><sub>J</sub>
+            supply voltage.</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">LM4628:temp<br>
+          </td>
+          <td style="text-align: center;">0x70C<br>
+          </td>
+          <td style="text-align: left;">LM4628 voltage regulator
+            temperature.<br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">MAIN3_3<br>
+          </td>
+          <td style="text-align: center;">0x70E<br>
+          </td>
+          <td style="text-align: left;">Main 3.3V supply voltage.<br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">K7A2_5:V<br>
+          </td>
+          <td style="text-align: center;">0x710<br>
+          </td>
+          <td style="text-align: left;">Kintex7 2.5V supply A voltage.<br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">K7B2_5:V</td>
+          <td style="text-align: center;">0x712</td>
+          <td style="text-align: left;">Kintex7 2.5V supply B voltage.</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">Board12:V<br>
+          </td>
+          <td style="text-align: center;">0x714<br>
+          </td>
+          <td style="text-align: left;">QF2pre 12V supply voltage.<br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">BOOT1_2:V<br>
+          </td>
+          <td style="text-align: center;">0x716<br>
+          </td>
+          <td style="text-align: left;">Bootstrap 1.2V supply voltage.<br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">K7AUX1_8:V<br>
+          </td>
+          <td style="text-align: center;">0x718<br>
+          </td>
+          <td style="text-align: left;">Kintex7 auxiliary supply
+            voltage.<br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">K7INT1_0:V<br>
+          </td>
+          <td style="text-align: center;">0x71A<br>
+          </td>
+          <td style="text-align: left;">Kintex7 internal 1.0V supply
+            voltage.<br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">K7MGTAVTT<br>
+          </td>
+          <td style="text-align: center;">0x71C<br>
+          </td>
+          <td style="text-align: left;">Kintex 7 MGT V<sub>TT</sub>
+            supply voltage.<br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">K7MGTAVCC:V<br>
+          </td>
+          <td style="text-align: center;">0x71E<br>
+          </td>
+          <td style="text-align: left;">Kintex 7 MGT V<sub>CC</sub>
+            supply voltage.</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">K7MGTAVCCAUX<br>
+          </td>
+          <td style="text-align: center;">0x720<br>
+          </td>
+          <td style="text-align: left;">Kintex 7 MGT auxiliary V<sub>CC</sub>
+            supply voltage.</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">BOOT3_3:V<br>
+          </td>
+          <td style="text-align: center;">0x722<br>
+          </td>
+          <td style="text-align: left;">Bootstrap 3.3V supply voltage.</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">MAIN3_3:I<br>
+          </td>
+          <td style="text-align: center;">0x724<br>
+          </td>
+          <td style="text-align: left;">Main 3.3V supply current.<br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">FMC3_3:I<br>
+          </td>
+          <td style="text-align: center;">0x728<br>
+          </td>
+          <td style="text-align: left;">FMC cards 3.3V supply current.<br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">FMC12:I<br>
+          </td>
+          <td style="text-align: center;">0x72C<br>
+          </td>
+          <td style="text-align: left;">FMC cards 12V supply current.</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">VADJ:I<br>
+          </td>
+          <td style="text-align: center;">0x730<br>
+          </td>
+          <td style="text-align: left;">FMC cards V<sub>AD</sub><sub>J</sub>
+            supply current.</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">BOOT3_3:I<br>
+          </td>
+          <td style="text-align: center;">0x734<br>
+          </td>
+          <td style="text-align: left;">Bootstrap 3.3V supply current.</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">K7INT1_0:I<br>
+          </td>
+          <td style="text-align: center;">0x738<br>
+          </td>
+          <td style="text-align: left;">Kintex7 internal 1.0V supply
+            current.</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">K7AUX1_8:I<br>
+          </td>
+          <td style="text-align: center;">0x73C<br>
+          </td>
+          <td style="text-align: left;">Kintex7 auxiliary supply
+            current.</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">K7MGTAVCC:I<br>
+          </td>
+          <td style="text-align: center;">0x740<br>
+          </td>
+          <td style="text-align: left;">Kintex 7 MGT V<sub>CC</sub>
+            supply current.</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">BOOT1_2:I<br>
+          </td>
+          <td style="text-align: center;">0x744<br>
+          </td>
+          <td style="text-align: left;">Bootstrap 1.2V supply current.</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">Board12:I<br>
+          </td>
+          <td style="text-align: center;">0x748<br>
+          </td>
+          <td style="text-align: left;">QF2pre 12V supply current.</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">fanSpeed<br>
+          </td>
+          <td style="text-align: center;">0x74C<br>
+          </td>
+          <td style="text-align: left;">Cooling fan speed (RPM).<br>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    
+<h2>Board Monitor Booleans<br>
+    </h2>
+
+    These analog-in records must have SCAN="I/O Intr"and should have
+    TSE="-2" to ensure that all receive the time stamp of the arrival of
+    the readback packet.&nbsp;&nbsp; The least significant 8 bits of the
+    ASYN subaddress are the&nbsp; index into the received packet of the 
+value. The next three bits of the
+    subaddress are the number of of the bit (0 is least 
+significant).&nbsp; The next bit is unused and the next four are set to 
+0001 to indicate this is a Boolean value.<br>
+<br>
+
+    
+    
+<table style=" text-align: left; width: 80%; margin-left: auto; margin-right: auto;" border="1" cellspacing="2" cellpadding="2">
+
+      <tbody>
+        <tr>
+          <td style="text-align: center;"><span style="font-weight:
+              bold;">Name</span><br>
+          </td>
+          <th style="text-align: center;">ASYN<br>
+            Subaddress<br>
+          </th>
+          <th style="vertical-align: middle; text-align: center;">Description<br>
+          </th>
+        </tr>
+        <tr>
+          <td style="text-align: center;" valign="middle" align="center">I2Cerror</td>
+          <td style="text-align: center;" valign="middle" align="center">0x175E
+          </td>
+          <td style="vertical-align: middle; height: 2px; text-align: left;">I2C readout fault latch.</td>
+        </tr>
+        
+      </tbody>
+    
+</table>
+
+    <br>
+<span style="font-weight: bold;"></span>
+<h2><span style="font-weight: bold;"></span>Communication Statistics
+    
+    </h2>
+<p>These longin records form a histogram of I/O completion
+      statistics.&nbsp; Typically SCAN="10 second". <br>
+    </p>
+    <table style=" text-align: left; width: 80%; margin-left: auto;
+      margin-right: auto;" border="1" cellspacing="2" cellpadding="2">
+      <tbody>
+        <tr>
+          <td style="text-align: center;"><span style="font-weight:
+              bold;">Name</span><br>
+          </td>
+          <th style="text-align: center;">ASYN<br>
+            Subaddress<br>
+          </th>
+          <th style="vertical-align: middle; text-align: center;">Description<br>
+          </th>
+        </tr>
+        <tr>
+          <td style="text-align: center;" valign="middle" align="center">Cmd<i>n</i>RetryCount<br>
+          </td>
+          <td style="text-align: center;" valign="middle" align="center">0x200<i>n</i><br>
+          </td>
+          <td style="vertical-align: top;" valign="middle" align="left">Number
+
+            of monitor readback operations which completed in <i>n</i>
+            (0 through 4) retries.<br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="middle" align="center">CmdFailedCount<br>
+          </td>
+          <td valign="middle" align="center">0x2005<br>
+          </td>
+          <td valign="middle" align="left">Number of monitor readback
+            operations which failed to complete even after 4 retry
+            attempts.<br>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+<br>
+<h1>Using QF2preMonitor support in an application</h1>
+    <p>Several files need minor modifications to use QF2preMonitor
+      support in an application.</p>
+    <ol>
+      <li>Add the full path to the QF2preMonitor support directory to
+        the application <tt>configure/RELEASE</tt> file:<br>
+        <tt>BPM=</tt><em>xxxx</em><tt>/modules/instrument/QF2PreMonitor/</tt><tt>&lt;release&gt;/</tt><tt>IOC/</tt><br>
+        Where <tt>&lt;release&gt;</tt> is the release number of the
+        QF2pre monitor support. You'll need to provide a similar line
+        for the ASYN support module.</li>
+      <li>Add instrument support to application database definition file<br>
+        The application database definition file must include the
+        database definition files for the BPM. There are two ways that
+        this can be done:
+        <ul>
+          <li>If you are building your application database definition
+            file the old-fashioned way from an <em>xxx</em><tt>Include.dbd</tt>
+            file you include the additional database definitions in that
+            file:<br>
+            <tt>include "base.dbd"</tt><br>
+            <tt>include "QF2preMonitor.dbd"</tt><br>
+          </li>
+          <li>If you are building your application database definition
+            file from the application Makefile you specify the
+            additional database definitions there:<br>
+            <em>xxx</em><tt>_DBD += base.dbd</tt><br>
+            <em>xxx</em><tt>_DBD += QF2preMonitor.dbd</tt><br>
+          </li>
+        </ul>
+      </li>
+      <li>Add the QF2preMonitor support libraries to the application<br>
+        You must link the QF2preMonitor support library and the ASYN
+        support library with the application. Add the following lines to
+        the application Makefile: <br>
+        <em>xxx</em><tt>_LIBS += QF2preMonitor</tt><br>
+        <em>xxx</em><tt>_LIBS += asyn</tt><br>
+        before the <br>
+        <em>xxx</em><tt>_LIBS += $(EPICS_BASE_IOC_LIBS)</tt></li>
+      <li><a name="bpmConfigure"></a>Add one <tt>qf2preMonitorConfigure</tt>
+        command for each QF2pre module, with arguments:<br>
+        <ol>
+          <li>The ASYN port name.</li>
+          <li>The IPv4 address of the QF2pre module.</li>
+          <li>The priority at which the port threads will run.&nbsp; A
+            missing value or a value of 0 confirms the default medium
+            priority.</li>
+        </ol>
+      </li>
+      <li> Load a database file or files describing the records
+        associated with each QF2pre board.&nbsp; Set the $(PORT) macro
+        to the ASYN port name given in the QF2preMonitor command and
+        specify the $(P) and&nbsp; $(R) macros to ensure unique record
+        names.<br>
+      </li>
+    </ol>
+    <p></p>
+  
+
+</body></html>

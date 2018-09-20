@@ -1,0 +1,47 @@
+# Trigger a readback
+record(bi, "$(P)$(R)trigger_") {
+    field(DESC, "Trigger a monitor readback")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT) 0x0 0)")
+    field(SCAN, "10 second")
+    field(ZNAM, "Trigger")
+    field(ONAM, "Trigger")
+}
+
+# Communication statistics
+record(longin, "$(P)$(R)Cmd0RetryCount") {
+    field(DESC, "Commands immediately acknowledged")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT) 0x2000 0)")
+    field(SCAN, "10 second")
+}
+record(longin, "$(P)$(R)Cmd1RetryCount") {
+    field(DESC, "Commands acknowledged with one retry")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT) 0x2001 0)")
+    field(SCAN, "10 second")
+}
+record(longin, "$(P)$(R)Cmd2RetryCount") {
+    field(DESC, "Commands acknowledged with two retries")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT) 0x2002 0)")
+    field(SCAN, "10 second")
+}
+record(longin, "$(P)$(R)Cmd3RetryCount") {
+    field(DESC, "Commands acknowledged with three retries")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT) 0x2003 0)")
+    field(SCAN, "10 second")
+}
+record(longin, "$(P)$(R)Cmd4RetryCount") {
+    field(DESC, "Commands acknowledged with four retries")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT) 0x2004 0)")
+    field(SCAN, "10 second")
+}
+record(longin, "$(P)$(R)CmdFailedCount") {
+    field(DESC, "Commands never acknowledged")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT) 0x2005 0)")
+    field(SCAN, "10 second")
+}

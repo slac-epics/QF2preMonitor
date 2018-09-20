@@ -1,0 +1,9 @@
+record(bi, "$(P)$(R)$(NAME)") {
+    field(DESC, "$(DESC)")
+    field(DTYP, "asynInt32")
+    field(INP , "@asyn($(PORT) 0x0$(A) 0)")
+    field(SCAN, "I/O Intr")
+    field(TSE,  "-2")
+    field(ZNAM, "$(ZNAM)")
+    field(ONAM, "$(ONAM)")
+}

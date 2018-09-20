@@ -1,0 +1,83 @@
+#
+# Common record
+#
+file "perQF2pre.template"
+{ pattern
+{    P,      R,		PORT		}
+{"\$(P)","\$(R)QF2pre:","\$(PORT)"	}
+}
+
+#
+# Monitor packet layout (low byte to high).  QSFP monitors are 119 bytes each
+#  Board temperatures, voltage, and currents
+#  Fan speed
+#  Spartan 6 QSFP (bottom module)
+#  Kintex 7 QSFP 1 (top module)
+#  Kintex 7 QSFP 2 (middle module)
+#
+
+#
+# Values from board monitors
+# Subaddress decoding:
+#  Short: Least significant 12 bits are index into received packet.
+#         Next three bits are number of valid bits in high byte, minus 1.
+#         Next bit (15) is set if value is signed.
+#         Next bit (16) is 0.
+#  Boolean: Least significant 12 bits are index into received packet.
+#           Next three bits are bit number.
+#           Next bit (15) is ignored.
+#           Next bit (16) is 1.
+
+file "perQF2preMonitor.template"
+{ pattern
+{    P,        R,     PORT,              NAME,		A,        EGU,       ESLO,   EOFF, LOLO,  LOW, HIGH, HIHI  , DESC	                      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",        "K7:Temp", F000,"degrees C", 3.90625e-3,      0,    1,    0,   65,   70 , "Kintex temp"		      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)"      "Board:Temp", F002,"degrees C", 3.90625e-3,      0,    1,    0,   60,   65 , "Board temp"		      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",     "TopFMCVADJ", 7004,        "V",  7.8125e-5,      0, 2.25, 2.40, 2.60, 2.75 , "Top FMC Vadj supply V"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",       "FMC3_3:V", 7006,        "V" , 7.8125e-5,      0,  3.0, 3.15, 3.45,  3.6 , "FMC cards 3.3V supply V"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",        "FMC12:V", 7008,        "V", 4.2969e-04,      0,  5.7, 5.85, 12.5, 13.0 , "FMC cards 12V supply V"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",     "BtmFMCVADJ", 700A,        "V", 3.90625e-5,      0,  1.6,  1.7,  1.9,  2.0 , "Bottom FMC Vadj supply V"       }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)"     "LM4628:Temp", 700C,"degrees C",-0.01698369565,236.956521,    1,    0,   60,   65 , "LM4628 V-regulator temp"  }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",      "MAIN3_3:V", 700E,        "V",  7.8125e-5,      0,  3.0, 3.15, 3.45,  3.6 , "Main 3.3V supply V"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",       "K7A2_5:V", 7010,        "V",  7.8125e-5,      0, 2.25, 2.40, 2.60, 2.75 , "Kintex 2.5V supply A V"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",       "K7B2_5:V", 7012,        "V",  7.8125e-5,      0, 2.25, 2.40, 2.60, 2.75 , "Kintex 2.5V supply B V"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",      "Board12:V", 7014,        "V",  4.2969e-4,      0,  5.7, 5.85, 12.5, 13.0 , "QF2_pre 12V supply V"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",      "BOOT1_2:V", 7016,        "V", 3.90625e-5,      0,  1.1, 1.15, 1.25,  1.3 , "Bootstrap 1.2V supply V"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",     "K7AUX1_8:V", 7018,        "V", 3.90625e-5,      0,  1.7, 1.75, 1.85,  1.9 , "Kintex aux supply V"  	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",     "K7INT1_0:V", 701A,        "V", 3.90625e-5,      0,  0.9, 0.95, 1.05,  1.1 , "Kintex internal 1.0V supply V"  }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",      "K7MGTAVTT", 701C,        "V", 3.90625e-5,      0,  1.1, 1.15, 1.25,  1.3 , "Kintex MGT VTT supply V"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",    "K7MGTAVCC:V", 701E,        "V", 3.90625e-5,      0,  0.9, 0.95, 1.05,  1.1 , "Kintex MGT VCC supply V"        }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",   "K7MGTAVCCAUX", 7020,        "V", 3.90625e-5,      0,  1.7, 1.75, 1.85,  1.9 , "Kintex MGT aux VCC supply V"    }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",      "BOOT3_3:V", 7022,        "V",  7.8125e-5,      0,  3.0, 3.15, 3.45,  3.6 , "Bootstrap 3.3V supply V"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",      "MAIN3_3:I", F024,        "A",    6.25e-4,      0, -0.1, -0.1,  2.5,  2.7 , "Main 3.3V supply I"   	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",       "FMC3_3:I", F026,        "A",    6.25e-4,      0, -0.1, -0.1,  2.5,  2.7 , "FMC cards 3.3V supply I"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",        "FMC12:I", F028,        "A",     2.5e-4,      0, -0.1, -0.1,  2.5,  2.7 , "FMC cards 12V supply I"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",         "VADJ:I", F02A,        "A",     2.5e-4,      0, -0.1, -0.1,  2.5,  2.7 , "FMC cards VADJ supply I"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",      "BOOT3_3:I", F02C,        "A",     2.5e-4,      0, -0.1, -0.1,  2.5,  2.7 , "Bootstrap 3.3V supply I"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",     "K7INT1_0:I", F02E,        "A",    6.25e-4,      0, -0.1, -0.1,  2.5,  2.7 , "Kintex internal 1.0V supply I"  }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",     "K7AUX1_8:I", F030,        "A",     2.5e-4,      0, -0.1, -0.1,  2.5,  2.7 , "Kintex aux supply I" 	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",    "K7MGTAVCC:I", F032,        "A",     2.5e-4,      0, -0.1, -0.1,  2.5,  2.7 , "Kintex MGT VCC supply I"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",      "BOOT1_2:I", F034,        "A",     2.5e-4,      0, -0.1, -0.1,  2.5,  2.7 , "Bootstrap 1.2V supply I"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",      "Board12:I", F036,        "A",    6.25e-4,      0, -0.1, -0.1,  2.5,  2.7 , "QF2_pre 12V supply I" 	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",       "fanSpeed", 7091,      "RPM","\$(FAN_ESLO=60)",0, 3000, 3500, 18000,19000,"Cooling fan speed" 	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",     "QSFP1:RxP1", 7078,       "uW",        0.1,      0,   30,   50, 9999, 9999 , "QSFP1 recv power 1"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",     "QSFP1:RxP2", 7076,       "uW",        0.1,      0,   30,   50, 9999, 9999 , "QSFP1 recv power 2"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",     "QSFP1:RxP3", 7074,       "uW",        0.1,      0,   30,   50, 9999, 9999 , "QSFP1 recv power 3"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",     "QSFP1:RxP4", 7072,       "uW",        0.1,      0,   30,   50, 9999, 9999 , "QSFP1 recv power 4"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",     "QSFP1:Temp", F066,        "C", 3.90625e-3,      0,    1,    0,   65,   70 , "QSFP1 temp"		      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",        "QSFP1:V", 7068,        "V",     1.0e-4,      0,  3.0, 3.15, 3.45,  3.6 , "QSFP1 V"			      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",     "QSFP2:RxP1", 708F,       "uW",        0.1,      0,   30,   50, 9999, 9999 , "QSFP2 recv power 1"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",     "QSFP2:RxP2", 708D,       "uW",        0.1,      0,   30,   50, 9999, 9999 , "QSFP2 recv power 2"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",     "QSFP2:RxP3", 708B,       "uW",        0.1,      0,   30,   50, 9999, 9999 , "QSFP2 recv power 3"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",     "QSFP2:RxP4", 7089,       "uW",        0.1,      0,   30,   50, 9999, 9999 , "QSFP2 recv power 4"	      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",     "QSFP2:Temp", F07D,        "C", 3.90625e-3,      0,    1,    0,   65,   70 , "QSFP2 temp"		      }		
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",        "QSFP2:V", 707F,        "V",     1.0e-4,      0,  3.0, 3.15, 3.45,  3.6 , "QSFP2 V"		 	      }	        
+}
+
+file "perQF2preBoolean.template"
+{ pattern
+{    P,        R,     PORT,              NAME,		A,      ZNAM,	     ONAM,	DESC				}     
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",       "I2Cerror", 170A3,   "Good",    "Fault",	"I2C readout fault latch"   	}
+{"\$(P)","\$(R)QF2pre:","\$(PORT)",  "BoardOverTemp", 150A3,   "Good",    "Fault",	"Board over temp"	     	}
+{"\$(P)","\$(R)QF2pre:","\$(PORT)", "KintexOverTemp", 140A3,   "Good",    "Fault",	"Kintex over temp" 	     	}
+}

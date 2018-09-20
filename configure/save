@@ -1,0 +1,88 @@
+# Where to install configuration files for ChannelWatcher
+
+vpath %.arConfig $(USR_VPATH) $(GENERIC_SRC_DIRS) $(dir $(ARCHIVES))
+vpath %.arsubstitutions $(USR_VPATH) $(GENERIC_SRC_DIRS) $(COMMON_DIR)
+
+INSTALL_ARCHIVE = $(INSTALL_LOCATION)/archive
+
+##################################################### Archive Flags
+
+INSTALL_ARCHIVEFLAGS = -I $(INSTALL_ARCHIVE)
+RELEASE_ARCHIVEFLAGS = $(patsubst %/dbd,%/archive, $(RELEASE_DBDFLAGS))
+ARCHIVEFLAGS  = $($*_ARCHIVEFLAGS) $(USR_ARCHIVEFLAGS) -I. $(GENERIC_SRC_INCLUDES) $(INSTALL_ARCHIVEFLAGS) $(RELEASE_ARCHIVEFLAGS)
+ARCHIVEFLAGS += -I$(COMMON_DIR)
+
+#####################################################  Targets
+
+INSTALL_ARCHIVES += $(addprefix $(INSTALL_ARCHIVE)/,$(notdir $(ARCHIVES)))
+
+COMMON_ARCHIVES += $(filter $(COMMON_DIR)/%, $(foreach file, $(ARCHIVES), \
+    $(firstword  $(SOURCE_ARCHIVES) $(COMMON_DIR)/$(file) ) ) )
+SOURCE_ARCHIVES = $(wildcard $(file) $(SOURCE_ARCHIVES_bbb) )
+SOURCE_ARCHIVES_bbb = $(foreach dir, $(GENERIC_SRC_DIRS), $(SOURCE_ARCHIVES_aaa)  )
+SOURCE_ARCHIVES_aaa = $(addsuffix /$(file), $(dir) )
+
+COMMONS = $(COMMON_DIR)/*.arConfig \
+          $(COMMON_DIR)/*.arsubstitutions
+
+##################################################### 
+
+ifndef T_A
+
+COMMON_DIR = .
+INSTALL_ARCHIVES =
+COMMON_ARCHIVES = .
+COMMONS = $(ARCHIVES)
+
+all:    install
+
+install: buildInstall
+
+buildInstall : build
+
+rebuild: clean install
+
+.PHONY: all inc build install clean rebuild buildInstall
+
+endif # T_A defined
+
+
+build : $(COMMON_ARCHIVES) \
+	$(INSTALL_ARCHIVES)
+
+clean:: 
+#	@$(RM) $(COMMONS)
+
+realclean:: clean
+
+##################################################### Substitution files
+
+$(INSTALL_ARCHIVE)/%.arsubstitutions: %.arsubstitutions
+	@echo "Installing arsubstitutions file $@"
+	@$(INSTALL) -d -m 644 $< $(@D)
+
+.PRECIOUS: $(COMMON_DIR)/%.arsubstitutions
+
+##################################################### arConfig files
+
+$(COMMON_DIR)/%.arConfig: %.arsubstitutions
+	@echo "Inflating arConfig from $< using local rule"
+	@$(RM) $@
+	@echo "$(MSI) -S$< > $(@F) </dev/null"
+	@$(MSI) -I.. $(ARCHIVEFLAGS) -S$< </dev/null > $@
+
+$(INSTALL_ARCHIVE)/%.arConfig: $(COMMON_DIR)/%.arConfig
+	@echo "Installing arConfig file $@"
+	@$(INSTALL) -d -m 644 $< $(@D)
+
+$(INSTALL_ARCHIVE)/%: %
+	@echo "Installing archive file $@"
+	@$(INSTALL) -d -m 644 $< $(@D)
+
+$(INSTALL_ARCHIVE)/%: ../%
+	@echo "Installing archive file $@"
+	@$(INSTALL) -d -m 644 $< $(@D)
+
+.PRECIOUS: $(COMMON_ARCHIVES)
+
+##################################################### END OF FILE
