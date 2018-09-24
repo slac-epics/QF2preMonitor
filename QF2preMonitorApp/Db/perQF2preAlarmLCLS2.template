@@ -40,6 +40,6 @@ record(calc, "$(P)$(R)Alarm2") {
 }
 
 record(stringin, "$(P)$(R)AlarmSum") {
-    field(DESC, "QF2 alarm summary)
+    field(DESC, "QF2 alarm summary")
     field(INP , "$(P)$(R)Alarm2.SEVR MSS")
 }
