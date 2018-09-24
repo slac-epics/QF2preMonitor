@@ -1,0 +1,34 @@
+record(calc, "$(P)$(R)$(NAME)Calc") {
+    field(DESC, "$(DESC)")
+    field(CALC, "A*B")
+    field(INPA, "$(P)$(R)$(V)")
+# Process after input I/V update
+    field(INPB, "$(P)$(R)$(I) CPP")
+    field(PREC, "3")
+    field(EGU,  "Watts")
+    field(LOLO, "$(LOLO)")
+    field(LOW,  "$(LOW)")
+    field(HIGH, "$(HIGH)")
+    field(HIHI, "$(HIHI)")
+    field(LLSV, "MAJOR")
+    field(LSV,  "MINOR")
+    field(HSV,  "MINOR")
+    field(HHSV, "MAJOR")
+    field(FLNK, "$(P)$(R)$(NAME)")
+}
+
+record(ai, "$(P)$(R)$(NAME)") {
+    field(DESC, "$(DESC)")
+    field(INP , "$(P)$(R)$(NAME)Calc")
+    field(TSEL, "$(P)$(R)$(V).TIME")
+    field(PREC, "3")
+    field(EGU,  "Watts")
+    field(LOLO, "$(LOLO)")
+    field(LOW,  "$(LOW)")
+    field(HIGH, "$(HIGH)")
+    field(HIHI, "$(HIHI)")
+    field(LLSV, "MAJOR")
+    field(LSV,  "MINOR")
+    field(HSV,  "MINOR")
+    field(HHSV, "MAJOR")
+}

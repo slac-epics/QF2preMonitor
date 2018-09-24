@@ -1,3 +1,13 @@
+Release: R0-0-1
+	 Add records to calculate power:
+	     QF2preMonitorApp/Db/perQF2prePower.template
+	 Add alarm summary for LCLS-II:
+	     QF2preMonitorApp/Db/perQF2preAlarmLCLS2.template
+	 Misc updates to PV names, units, alarm limits:
+	      QF2preMonitorApp/Db/QF2preMonitorLCLS2.substitutions
+	 Due to above, update archiving template:
+	      QF2preMonitorApp/srcArchive/qf2pre_lcls2.tpl-arch
+
 Release: R0-0-0
          Initial release at SLAC.
 	 Author: Eric Norum

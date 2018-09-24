@@ -1,0 +1,45 @@
+# First draft of alarm summary. Includes
+# all voltages and temps. Adjust as we 
+# get more experience.
+record(calc, "$(P)$(R)Alarm1") {
+    field(DESC, "QF2 alarm summary")
+    field(SCAN, "10 second")
+# CALC must do something with all inputs to run the MS logic
+# VAL is not used
+    field(CALC, "A+B+C+D+E+F+G+H+I+J+K+L")
+    field(INPA, "$(P)$(R)TopFMCVadj.SEVR MS")
+    field(INPB, "$(P)$(R)FMC3_3V.SEVR MS")
+    field(INPC, "$(P)$(R)FMC6V.SEVR MS")
+    field(INPD, "$(P)$(R)BtmFMCVadj.SEVR MS")
+    field(INPE, "$(P)$(R)Main3_3V.SEVR MS")
+    field(INPF, "$(P)$(R)KA2_5V.SEVR MS")
+    field(INPG, "$(P)$(R)KB2_5V.SEVR MS")
+    field(INPH, "$(P)$(R)Board6V.SEVR MS")
+    field(INPI, "$(P)$(R)Boot1_2V.SEVR MS")
+    field(INPJ, "$(P)$(R)KAux1_8V.SEVR MS")
+    field(INPK, "$(P)$(R)KInt1_0V.SEVR MS")
+    field(INPL, "$(P)$(R)KMgtAVtt.SEVR MS")
+    field(FLNK, "$(P)$(R)Alarm2")
+}
+
+record(calc, "$(P)$(R)Alarm2") {
+    field(DESC, "QF2 alarm summary")
+# CALC must do something with all inputs to run the MS logic
+# VAL is not used
+    field(CALC, "A+B+C+D+E+F+G+H+I+J+K+L")
+    field(INPA, "$(P)$(R)Alarm1.SEVR MS")
+    field(INPB, "$(P)$(R)KMgtAVccV.SEVR MS")
+    field(INPC, "$(P)$(R)KMgtAVccAux.SEVR MS")
+    field(INPD, "$(P)$(R)Boot3_3V.SEVR MS")
+    field(INPE, "$(P)$(R)KintexTemp.SEVR MS")
+    field(INPF, "$(P)$(R)BoardTemp.SEVR MS")
+    field(INPG, "$(P)$(R)LM4628Temp.SEVR MS")
+    field(INPH, "$(P)$(R)BoardOverTemp.SEVR MS")
+    field(INPI, "$(P)$(R)KintexOverTemp.SEVR MS")
+    field(FLNK, "$(P)$(R)AlarmSum")
+}
+
+record(stringin, "$(P)$(R)AlarmSum") {
+    field(DESC, "QF2 alarm summary)
+    field(INP , "$(P)$(R)Alarm2.SEVR MSS")
+}

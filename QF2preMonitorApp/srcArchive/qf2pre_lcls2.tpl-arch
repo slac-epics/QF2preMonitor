@@ -25,15 +25,15 @@ $(P)$(R)QF2_CmdFailedCount          10              monitor
 
 $(P)$(R)QF2_KintexTemp   	10		scan
 $(P)$(R)QF2_BoardTemp   	10		scan	   
-$(P)$(R)QF2_TopFMCVAdj    	10		scan 
+$(P)$(R)QF2_TopFMCVadj    	10		scan 
 $(P)$(R)QF2_FMC3_3V	   	10		scan  
-$(P)$(R)QF2_FMC12V	      	10		scan
+$(P)$(R)QF2_FMC6V	      	10		scan
 $(P)$(R)QF2_BtmFMCVadj      	10		scan
 $(P)$(R)QF2_LM4628Temp      	10		scan
 $(P)$(R)QF2_Main3_3V	      	10		scan
 $(P)$(R)QF2_KA2_5V	      	10		scan
 $(P)$(R)QF2_KB2_5V	      	10		scan
-$(P)$(R)QF2_Board12V	      	10		scan
+$(P)$(R)QF2_Board6V	      	10		scan
 $(P)$(R)QF2_Boot1_2V	      	10		scan
 $(P)$(R)QF2_KAux1_8V	      	10		scan
 $(P)$(R)QF2_KInt1_0V	      	10		scan
@@ -43,15 +43,14 @@ $(P)$(R)QF2_KMgtAVccAux     	10		scan
 $(P)$(R)QF2_Boot3_3V	      	10		scan
 $(P)$(R)QF2_Main3_3I	      	10		scan
 $(P)$(R)QF2_FMC3_3I	      	10		scan
-$(P)$(R)QF2_FMC12I	      	10		scan
-$(P)$(R)QF2_FMCVAdjI	      	10		scan
+$(P)$(R)QF2_FMC6I	      	10		scan
+$(P)$(R)QF2_FMCVadjI	      	10		scan
 $(P)$(R)QF2_Boot3_3I	      	10		scan
 $(P)$(R)QF2_KInt1_0I	      	10		scan
 $(P)$(R)QF2_KAux1_8I	      	10		scan
 $(P)$(R)QF2_KMgtAVccI	      	10		scan
 $(P)$(R)QF2_Boot1_2I	      	10		scan
-$(P)$(R)QF2_Board12I	      	10		scan
-$(P)$(R)QF2_FanSpeed	      	10		scan
+$(P)$(R)QF2_Board6I	      	10		scan
 $(P)$(R)QF2_QSFP1RxPwr1     	10		scan
 $(P)$(R)QF2_QSFP1RxPwr2     	10		scan
 $(P)$(R)QF2_QSFP1RxPwr3     	10		scan
@@ -65,9 +64,23 @@ $(P)$(R)QF2_QSFP2RxPwr4     	10		scan
 $(P)$(R)QF2_QSFP2Temp	      	10		scan
 $(P)$(R)QF2_QSFP2V          	10		scan
 
+$(P)$(R)QF2_Board6Pwr          	10		scan
+$(P)$(R)QF2_Boot3_3Pwr          10		scan
+$(P)$(R)QF2_Boot1_2Pwr          10		scan
+$(P)$(R)QF2_Main3_3Pwr         	10		scan
+$(P)$(R)QF2_KAux1_8Pwr          10		scan
+$(P)$(R)QF2_KInt1_0Pwr          10		scan
+$(P)$(R)QF2_KMgtAVccPwr         10		scan
+$(P)$(R)QF2_FMC6Pwr          	10		scan
+$(P)$(R)QF2_FMC3_3Pwr          	10		scan
+$(P)$(R)QF2_TopFMCVadjPwr       10		scan
+$(P)$(R)QF2_BtmFMCVadjPwr       10		scan
+
 $(P)$(R)QF2_I2CError   	10		monitor
 $(P)$(R)QF2_BoardOverTemp   	10		monitor
 $(P)$(R)QF2_KintexOverTemp   	10		monitor
+
+$(P)$(R)QF2_AlarmSum.SEVR   	10		monitor
 
  
 # End of script

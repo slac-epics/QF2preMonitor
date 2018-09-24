@@ -41,17 +41,17 @@ file "perQF2preMonitor.template"
 {    P,        R,     PORT, NAME,		A,        EGU,       ESLO,	EOFF, LOLO,  LOW, HIGH, HIHI, DESC	                 }
 {"\$(P)","\$(R)QF2_","\$(PORT)","KintexTemp", 	F000,	  "DegC", 3.90625e-3,      0,    1,    0,   65,   75, "Kintex temp"		 }
 {"\$(P)","\$(R)QF2_","\$(PORT)","BoardTemp",	F002,	  "DegC", 3.90625e-3,      0,    1,    0,   50,   60, "Board temp"		 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","TopFMCVAdj", 	7004,        "V",  7.8125e-5,      0, 2.25, 2.40, 2.60, 2.75, "Top FMC Vadj supply V"	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","TopFMCVadj", 	7004,        "V",  7.8125e-5,      0, 2.25, 2.40, 2.60, 2.75, "Top FMC Vadj supply V"	 }
 {"\$(P)","\$(R)QF2_","\$(PORT)","FMC3_3V", 	7006,        "V" , 7.8125e-5,      0,  3.1, 3.15, 3.45,  3.5, "FMC cards 3.3V supply V"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","FMC12V", 	7008,        "V", 4.2969e-04,      0,  5.8,  6.0  12.5, 13.0, "FMC cards 12V supply V"	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","FMC6V", 	7008,        "V", 4.2969e-04,      0,  5.8,  6.0   7.0,  7.5, "FMC cards 6V supply V"	 }
 {"\$(P)","\$(R)QF2_","\$(PORT)","BtmFMCVadj", 	700A,        "V", 3.90625e-5,      0,  1.6,  1.7,  1.9,  2.0, "Bottom FMC Vadj supply V" }
 {"\$(P)","\$(R)QF2_","\$(PORT)","LM4628Temp",	700C,	  "DegC",-0.01698369565,236.956521, 1, 0,   60,   65, "LM4628 V-regulator temp"  }
 {"\$(P)","\$(R)QF2_","\$(PORT)","Main3_3V", 	700E,        "V",  7.8125e-5,      0,  3.1, 3.15, 3.45,  3.5, "Main 3.3V supply V"	 }
 {"\$(P)","\$(R)QF2_","\$(PORT)","KA2_5V", 	7010,        "V",  7.8125e-5,      0,  2.3,  2.4,  2.6,  2.7, "Kintex 2.5V supply A V"	 }
 {"\$(P)","\$(R)QF2_","\$(PORT)","KB2_5V", 	7012,        "V",  7.8125e-5,      0,  2.3,  2.4,  2.6,  2.7, "Kintex 2.5V supply B V"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","Board12V", 	7014,        "V",  4.2969e-4,      0,  5.8,  6.0, 12.5, 13.0, "QF2_pre 12V supply V"	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","Board6V", 	7014,        "V",  4.2969e-4,      0,  5.8,  6.0,  7.0,  7.5, "QF2_pre 6V supply V"	 }
 {"\$(P)","\$(R)QF2_","\$(PORT)","Boot1_2V", 	7016,        "V", 3.90625e-5,      0,  1.1, 1.15, 1.25,  1.3, "Bootstrap 1.2V supply V"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","KAux1_8V", 	7018,        "V", 3.90625e-5,      0,  1.7, 1.75, 1.85,  1.9, "Kintex aux supply V"  	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","KAux1_8V", 	7018,        "V", 3.90625e-5,      0,  1.7, 1.75, 1.85,  1.9, "Kintex aux 1.8V supply V"  	 }
 {"\$(P)","\$(R)QF2_","\$(PORT)","KInt1_0V", 	701A,        "V", 3.90625e-5,      0,  0.9, 0.95, 1.05,  1.1, "Kintex internal 1.0V supply V"}
 {"\$(P)","\$(R)QF2_","\$(PORT)","KMgtAVtt", 	701C,        "V", 3.90625e-5,      0,  1.1, 1.15, 1.25,  1.3, "Kintex MGT VTT supply V"	 }
 {"\$(P)","\$(R)QF2_","\$(PORT)","KMgtAVccV", 	701E,        "V", 3.90625e-5,      0,  0.9, 0.95, 1.05,  1.1, "Kintex MGT VCC supply V"  }
@@ -59,33 +59,58 @@ file "perQF2preMonitor.template"
 {"\$(P)","\$(R)QF2_","\$(PORT)","Boot3_3V", 	7022,        "V",  7.8125e-5,      0,  3.1, 3.15, 3.45,  3.5, "Bootstrap 3.3V supply V"	 }
 {"\$(P)","\$(R)QF2_","\$(PORT)","Main3_3I", 	F024,        "A",    6.25e-4,      0, -0.1, -0.1,  2.5,  2.7, "Main 3.3V supply I"   	 }
 {"\$(P)","\$(R)QF2_","\$(PORT)","FMC3_3I", 	F026,        "A",    6.25e-4,      0, -0.1, -0.1,  2.5,  2.7, "FMC cards 3.3V supply I"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","FMC12I", 	F028,        "A",     2.5e-4,      0, -0.1, -0.1,  2.5,  2.7, "FMC cards 12V supply I"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","FMCVAdjI", 	F02A,        "A",     2.5e-4,      0, -0.1, -0.1,  2.5,  2.7, "FMC cards VADJ supply I"	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","FMC6I", 	F028,        "A",     2.5e-4,      0, -0.1, -0.1,  2.5,  2.7, "FMC cards 6V supply I"	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","FMCVadjI", 	F02A,        "A",     2.5e-4,      0, -0.1, -0.1,  2.5,  2.7, "FMC cards Vadj supply I"	 }
 {"\$(P)","\$(R)QF2_","\$(PORT)","Boot3_3I", 	F02C,        "A",     2.5e-4,      0, -0.1, -0.1,  2.5,  2.7, "Bootstrap 3.3V supply I"	 }
 {"\$(P)","\$(R)QF2_","\$(PORT)","KInt1_0I", 	F02E,        "A",    6.25e-4,      0, -0.1, -0.1,  2.5,  2.7, "Kintex internal 1.0V supply I"}
 {"\$(P)","\$(R)QF2_","\$(PORT)","KAux1_8I", 	F030,        "A",     2.5e-4,      0, -0.1, -0.1,  2.5,  2.7, "Kintex aux supply I" 	 }
 {"\$(P)","\$(R)QF2_","\$(PORT)","KMgtAVccI", 	F032,        "A",     2.5e-4,      0, -0.1, -0.1,  2.5,  2.7, "Kintex MGT VCC supply I"	 }
 {"\$(P)","\$(R)QF2_","\$(PORT)","Boot1_2I", 	F034,        "A",     2.5e-4,      0, -0.1, -0.1,  2.5,  2.7, "Bootstrap 1.2V supply I"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","Board12I", 	F036,        "A",    6.25e-4,      0, -0.1, -0.1,  2.5,  2.7, "QF2_pre 12V supply I" 	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","FanSpeed", 	7091,      "RPM","\$(FAN_ESLO=60)",0, 3000, 3500, 18000,19000,"Cooling fan speed" 	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1RxPwr1", 	7078,       "uW",        0.1,      0,   30,   50, 9999, 9999, "QSFP1 recv power 1"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1RxPwr2", 	7076,       "uW",        0.1,      0,   30,   50, 9999, 9999, "QSFP1 recv power 2"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1RxPwr3", 	7074,       "uW",        0.1,      0,   30,   50, 9999, 9999, "QSFP1 recv power 3"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1RxPwr4", 	7072,       "uW",        0.1,      0,   30,   50, 9999, 9999, "QSFP1 recv power 4"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1Temp", 	F066,     "DegC", 3.90625e-3,      0,    1,    0,   65,   70, "QSFP1 temp"		 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","Board6I", 	F036,        "A",    6.25e-4,      0, -0.1, -0.1,  2.5,  2.7, "QF2_pre 6V supply I" 	 }
+# Per J. Jones 9/24/2018, these chassis do not use fans. Comment out for now.
+#{"\$(P)","\$(R)QF2_","\$(PORT)","FanSpeed", 	7091,      "RPM","\$(FAN_ESLO=60)",0, 3000, 3500, 18000,19000,"Cooling fan speed" 	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1RxPwr1", 	7078,       "uWatts",    0.1,      0,   30,   50, 9999, 9999, "QSFP1 recv power 1"	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1RxPwr2", 	7076,       "uWatts",    0.1,      0,   30,   50, 9999, 9999, "QSFP1 recv power 2"	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1RxPwr3", 	7074,       "uWatts",    0.1,      0,   30,   50, 9999, 9999, "QSFP1 recv power 3"	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1RxPwr4", 	7072,       "uWatts",    0.1,      0,   30,   50, 9999, 9999, "QSFP1 recv power 4"	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1Temp", 	F066,     "DegC", 3.90625e-3,      0,   -1,   -1,   65,   70, "QSFP1 temp"		 }
 {"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1V", 	7068,        "V",     1.0e-4,      0,  3.0, 3.15, 3.45,  3.6, "QSFP1 V"			 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2RxPwr1", 	708F,       "uW",        0.1,      0,   30,   50, 9999, 9999, "QSFP2 recv power 1"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2RxPwr2", 	708D,       "uW",        0.1,      0,   30,   50, 9999, 9999, "QSFP2 recv power 2"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2RxPwr3", 	708B,       "uW",        0.1,      0,   30,   50, 9999, 9999, "QSFP2 recv power 3"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2RxPwr4", 	7089,       "uW",        0.1,      0,   30,   50, 9999, 9999, "QSFP2 recv power 4"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2Temp", 	F07D,     "DegC", 3.90625e-3,      0,    1,    0,   65,   70, "QSFP2 temp"		 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2RxPwr1", 	708F,       "uWatts",    0.1,      0,   30,   50, 9999, 9999, "QSFP2 recv power 1"	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2RxPwr2", 	708D,       "uWatts",    0.1,      0,   30,   50, 9999, 9999, "QSFP2 recv power 2"	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2RxPwr3", 	708B,       "uWatts",    0.1,      0,   30,   50, 9999, 9999, "QSFP2 recv power 3"	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2RxPwr4", 	7089,       "uWatts",    0.1,      0,   30,   50, 9999, 9999, "QSFP2 recv power 4"	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2Temp", 	F07D,     "DegC", 3.90625e-3,      0,   -1,   -1,   65,   70, "QSFP2 temp"		 }
 {"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2V", 	707F,        "V",     1.0e-4,      0,  3.0, 3.15, 3.45,  3.6, "QSFP2 V"		 	 }	             
 }			        
 			    
 file "perQF2preBoolean.template"
 { pattern
 {    P,        R,     PORT,              NAME,      A,       ZNAM,       ONAM ,	DESC			}
+# Per J. Jones 9/24/2018, do not alarm I2CError
 {"\$(P)","\$(R)QF2_","\$(PORT)",       "I2CError", 170A3,   "Good",    "Fault",	"I2C readout fault latch"}
 {"\$(P)","\$(R)QF2_","\$(PORT)",  "BoardOverTemp", 150A3,   "Good",    "Fault",	"Board over temp"	}
 {"\$(P)","\$(R)QF2_","\$(PORT)", "KintexOverTemp", 140A3,   "Good",    "Fault",	"Kintex over temp" 	}     
+}
+
+# Set alarm limits wide until determine appropriate values
+file "perQF2prePower.template"
+{ pattern
+{    P,        R,     NAME,          V,		   I,            LOLO,   LOW,   HIGH,   HIHI,	  DESC				}
+{"\$(P)","\$(R)QF2_", "Board6Pwr",   "Board6V",   "Board6I",    "-5",    "-5",  "25",   "25",   "Board 6V power"		}
+{"\$(P)","\$(R)QF2_", "Boot3_3Pwr",  "Boot3_3V",  "Boot3_3I",   "-5",    "-5",  "25",   "25",   "Boot 3.3V power"		}
+{"\$(P)","\$(R)QF2_", "Boot1_2Pwr",  "Boot1_2V",  "Boot1_2I",   "-5",    "-5",  "25",   "25",   "Boot 1.2V power"		}
+{"\$(P)","\$(R)QF2_", "Main3_3Pwr",  "Main3_3V",  "Main3_3I",   "-5",    "-5",  "25",   "25",   "Main 3.3V power"		}
+{"\$(P)","\$(R)QF2_", "KAux1_8Pwr",  "KAux1_8V",  "KAux1_8I",   "-5",    "-5",  "25",   "25",   "Kintex aux 1.8V supply power"}
+{"\$(P)","\$(R)QF2_", "KInt1_0Pwr",  "KInt1_0V",  "KInt1_0I",   "-5",    "-5",  "25",   "25",   "Kintex int 1.8V supply power"}
+{"\$(P)","\$(R)QF2_", "KMgtAVccPwr", "KMgtAVccV", "KMgtAVccI",  "-5",    "-5",  "25",   "25",   "Kintex MGT VCC supply power"	}
+{"\$(P)","\$(R)QF2_", "FMC6Pwr",     "FMC6V",     "FMC6I",      "-5",    "-5",  "25",   "25",   "FMC cards 6V supply power"	}
+{"\$(P)","\$(R)QF2_", "FMC3_3Pwr",   "FMC3_3V",   "FMC3_3I",    "-5",    "-5",  "25",   "25",   "FMC cards 3.3V supply power"	}
+{"\$(P)","\$(R)QF2_", "TopFMCVadjPwr","TopFMCVadj","FMCVadjI",  "-5",    "-5",  "25",   "25",   "Top FMC Vadj supply power"	}
+{"\$(P)","\$(R)QF2_", "BtmFMCVadjPwr","BtmFMCVadj","FMCVadjI",  "-5",    "-5",  "25",   "25",   "Btm FMC Vadj supply power"	}
+}
+
+file "perQF2preAlarmLCLS2.template"
+{ pattern
+{    P,        R,   }
+{"\$(P)","\$(R)QF2_"}
 }
