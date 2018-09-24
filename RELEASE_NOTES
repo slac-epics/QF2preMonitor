@@ -1,4 +1,4 @@
-Release: R0-0-1
+Release: R0.0.1
 	 Add records to calculate power:
 	     QF2preMonitorApp/Db/perQF2prePower.template
 	 Add alarm summary for LCLS-II:
