@@ -1,9 +1,9 @@
 record(calc, "$(P)$(R)$(NAME)Calc") {
     field(DESC, "$(DESC)")
     field(CALC, "A*B")
-    field(INPA, "$(P)$(R)$(V) MS")
+    field(INPA, "$(P)$(R)$(V) MSI")
 # Process after input I/V update
-    field(INPB, "$(P)$(R)$(I) CPP MS")
+    field(INPB, "$(P)$(R)$(I) CPP MSI")
     field(PREC, "3")
     field(EGU,  "Watts")
     field(LOLO, "$(LOLO)")
@@ -19,7 +19,7 @@ record(calc, "$(P)$(R)$(NAME)Calc") {
 
 record(ai, "$(P)$(R)$(NAME)") {
     field(DESC, "$(DESC)")
-    field(INP , "$(P)$(R)$(NAME)Calc MS")
+    field(INP , "$(P)$(R)$(NAME)Calc MSI")
     field(TSEL, "$(P)$(R)$(V).TIME")
     field(PREC, "3")
     field(EGU,  "Watts")
