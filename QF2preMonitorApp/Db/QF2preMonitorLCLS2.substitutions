@@ -69,17 +69,17 @@ file "perQF2preMonitor.template"
 {"\$(P)","\$(R)QF2_","\$(PORT)","Board6I", 	F036,        "A",    6.25e-4,      0, -0.1, -0.1,  2.5,  2.7, "QF2_pre 6V supply I" 	 }
 # Per J. Jones 9/24/2018, these chassis do not use fans. Comment out for now.
 #{"\$(P)","\$(R)QF2_","\$(PORT)","FanSpeed", 	7091,      "RPM","\$(FAN_ESLO=60)",0, 3000, 3500, 18000,19000,"Cooling fan speed" 	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1RxPwr1", 	7078,       "uWatts",    0.1,      0,   30,   50, 9999, 9999, "QSFP1 recv power 1"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1RxPwr2", 	7076,       "uWatts",    0.1,      0,   30,   50, 9999, 9999, "QSFP1 recv power 2"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1RxPwr3", 	7074,       "uWatts",    0.1,      0,   30,   50, 9999, 9999, "QSFP1 recv power 3"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1RxPwr4", 	7072,       "uWatts",    0.1,      0,   30,   50, 9999, 9999, "QSFP1 recv power 4"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1Temp", 	F066,     "DegC", 3.90625e-3,      0,   -1,   -1,   65,   70, "QSFP1 temp"		 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1RxPwr1", 	7078,       "uWatts",    0.1,      0,  100,  150,  850,  900, "QSFP1 recv power 1"	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1RxPwr2", 	7076,       "uWatts",    0.1,      0,  100,  150,  850,  900, "QSFP1 recv power 2"	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1RxPwr3", 	7074,       "uWatts",    0.1,      0,  100,  150,  850,  900, "QSFP1 recv power 3"	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1RxPwr4", 	7072,       "uWatts",    0.1,      0,  100,  150,  850,  900, "QSFP1 recv power 4"	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1Temp", 	F066,     "DegC", 3.90625e-3,      0,    0,    1,   65,   70, "QSFP1 temp"		 }
 {"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1V", 	7068,        "V",     1.0e-4,      0,  3.0, 3.15, 3.45,  3.6, "QSFP1 V"			 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2RxPwr1", 	708F,       "uWatts",    0.1,      0,   30,   50, 9999, 9999, "QSFP2 recv power 1"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2RxPwr2", 	708D,       "uWatts",    0.1,      0,   30,   50, 9999, 9999, "QSFP2 recv power 2"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2RxPwr3", 	708B,       "uWatts",    0.1,      0,   30,   50, 9999, 9999, "QSFP2 recv power 3"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2RxPwr4", 	7089,       "uWatts",    0.1,      0,   30,   50, 9999, 9999, "QSFP2 recv power 4"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2Temp", 	F07D,     "DegC", 3.90625e-3,      0,   -1,   -1,   65,   70, "QSFP2 temp"		 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2RxPwr1", 	708F,       "uWatts",    0.1,      0,  100,  150,  850,  900, "QSFP2 recv power 1"	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2RxPwr2", 	708D,       "uWatts",    0.1,      0,  100,  150,  850,  900, "QSFP2 recv power 2"	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2RxPwr3", 	708B,       "uWatts",    0.1,      0,  100,  150,  850,  900, "QSFP2 recv power 3"	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2RxPwr4", 	7089,       "uWatts",    0.1,      0,  100,  150,  850,  900, "QSFP2 recv power 4"	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2Temp", 	F07D,     "DegC", 3.90625e-3,      0,    0,    1,   65,   70, "QSFP2 temp"		 }
 {"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2V", 	707F,        "V",     1.0e-4,      0,  3.0, 3.15, 3.45,  3.6, "QSFP2 V"		 	 }	             
 }			        
 			    
@@ -107,10 +107,4 @@ file "perQF2prePower.template"
 {"\$(P)","\$(R)QF2_", "FMC3_3Pwr",   "FMC3_3V",   "FMC3_3I",    "-5",    "-5",  "25",   "25",   "FMC cards 3.3V supply power"	}
 {"\$(P)","\$(R)QF2_", "TopFMCVadjPwr","TopFMCVadj","FMCVadjI",  "-5",    "-5",  "25",   "25",   "Top FMC Vadj supply power"	}
 {"\$(P)","\$(R)QF2_", "BtmFMCVadjPwr","BtmFMCVadj","FMCVadjI",  "-5",    "-5",  "25",   "25",   "Btm FMC Vadj supply power"	}
-}
-
-file "perQF2preAlarmLCLS2.template"
-{ pattern
-{    P,        R,   }
-{"\$(P)","\$(R)QF2_"}
 }

@@ -6,7 +6,7 @@ record(calc, "$(P)$(R)Alarm1") {
     field(SCAN, "10 second")
 # CALC must do something with all inputs to run the MS logic
 # VAL is not used
-    field(CALC, "A+B+C+D+E+F+G+H+I+J+K+L")
+    field(CALC, "A")
     field(INPA, "$(P)$(R)TopFMCVadj.SEVR MSS")
     field(INPB, "$(P)$(R)FMC3_3V.SEVR MSS")
     field(INPC, "$(P)$(R)FMC6V.SEVR MSS")
@@ -26,7 +26,7 @@ record(calc, "$(P)$(R)Alarm2") {
     field(DESC, "QF2 alarm summary")
 # CALC must do something with all inputs to run the MS logic
 # VAL is not used
-    field(CALC, "A+B+C+D+E+F+G+H+I+J+K+L")
+    field(CALC, "A")
     field(INPA, "$(P)$(R)Alarm1.SEVR MSS")
     field(INPB, "$(P)$(R)KMgtAVccV.SEVR MSS")
     field(INPC, "$(P)$(R)KMgtAVccAux.SEVR MSS")
@@ -36,6 +36,11 @@ record(calc, "$(P)$(R)Alarm2") {
     field(INPG, "$(P)$(R)LM4628Temp.SEVR MSS")
     field(INPH, "$(P)$(R)BoardOverTemp.SEVR MSS")
     field(INPI, "$(P)$(R)KintexOverTemp.SEVR MSS")
+# Additional optional per-chassis inputs. 
+# Likely used for SFP power levels.
+    field(INPJ, "$(INP1=)")
+    field(INPK, "$(INP2=)")
+    field(INPL, "$(INP3=)")
     field(FLNK, "$(P)$(R)AlarmSum")
 }
 

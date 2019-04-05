@@ -14,6 +14,9 @@ DB += QF2preMonitor.db
 
 # Using LCLS-II conventions
 DB += QF2preMonitorLCLS2.db
+DB += QF2preAlarmLCLS2PRC.db
+DB += QF2preAlarmLCLS2RFS.db
+DB += perQF2preAlarmLCLS2.template
 
 #----------------------------------------------------
 # If <anyname>.db template is not named <anyname>*.template add
