@@ -1,3 +1,15 @@
+Release: R0.0.2
+	 Add LCLS-II LLRF chassis-specific alarm summaries. 
+		QF2preMonitorApp/Db:
+			New:
+				QF2preAlarmLCLS2PRC.substitutions
+				QF2preAlarmLCLS2RFS.substitutions
+	     		Modified:
+	       
+				Makefile
+				QF2preMonitorLCLS2.substitutions
+				perQF2preAlarmLCLS2.template
+
 Release: R0.0.1
 	 Add records to calculate power:
 	     QF2preMonitorApp/Db/perQF2prePower.template
