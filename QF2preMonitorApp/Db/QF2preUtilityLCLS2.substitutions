@@ -1,0 +1,64 @@
+# LCLS-II Conventions:
+# For Superconducting RF systems:
+#   P=Cryomodule name with terminating colon, 
+#   		 ex. ACCL:L1B:0200:
+#   R=Chassis name with terminating colon,
+#   	         ex. PRCA
+#	PORT must not be identical to PORT used 
+#			for health monitoring interface
+#
+
+# Common record
+#
+file "perQF2pre.template"
+{ pattern
+{    P,      R,      PORT   }
+{"\$(P)","\$(R)QF2_Util","\$(PORT)" }
+}
+
+# Int32 Subaddress decoding:
+#  Short: Least significant 12 bits are index into received packet.
+#         Next three bits are number of valid bits in high byte, minus 1.
+#         Next bit (15) is set if value is signed.
+#         Next bit (16) is 0.
+#  Boolean: Least significant 12 bits are index into received packet.
+#           Next three bits are bit number.
+#           Next bit (15) is ignored.
+#           Next bit (16) is 1.
+			    
+file "perQF2preBoolean.template"
+{ pattern
+{    P,        R,     PORT,			NAME,	A,		ZNAM,			ONAM,		ZSV,		DESC			 	}
+{"\$(P)","\$(R)QF2_","\$(PORT)","FwActive",0002,	"Bootloader",	"Runtime",	"MINOR",	"Active firmware"	}
+{"\$(P)","\$(R)QF2_","\$(PORT)","Type",    0001,	"BMB7",	  		"QF2-pre",	"",			"Board type"		}
+}
+
+# Octet Subaddress decoding:
+#  Least significant 7 bits are index into received packet.
+#	  Next 7 bits are byte length.
+#	  Last 2 bits give additional information:
+#		Value of 0: QF2pre provides seconds since epoch, convert to UTC date string
+#		Value of 1: inverted order byte array waveform
+
+file "perQF2preString.template"
+{ pattern
+{    P,        R,     PORT, 		NAME,			A,   DESC           			}
+{"\$(P)","\$(R)QF2_","\$(PORT)","BootldrFwDate",   403, "Bootloader FW build date"	}
+{"\$(P)","\$(R)QF2_","\$(PORT)","RuntimeFwDate",   42B, "Runtime FW build date"		}
+}
+
+# NELM = nbytes *2 + 1 (for terminating null character)
+file "perQF2preWaveform.template"
+{ pattern
+{    P,        R,     PORT, 	NAME,               A,   	FTVL,	NELM,	DESC           			}
+{"\$(P)","\$(R)QF2_","\$(PORT)","BootldrFwHash",  	500A, "UCHAR",	65,		"Bootloader FW SHA256"	}
+{"\$(P)","\$(R)QF2_","\$(PORT)","RuntimeFwHash",  	5032, "UCHAR",	65,		"Runtime FW SHA256"		}
+{"\$(P)","\$(R)QF2_","\$(PORT)","Id",				44D2, "UCHAR",	19,		"Board ID"				}
+}
+
+# VL field value must be <= 255 (single char) 
+file "perQF2preMbbo.template"
+{ pattern
+{    P,        R,     PORT,				NAME,	A,	 ZRST,		ZRVL,	ONST,		ONVL,	DESC			}
+{"\$(P)","\$(R)QF2_","\$(PORT)", "Boot",	0,	"Runtime",	"0x81",	"Bootloader",	"0x1",	"Reboot board"	}
+}

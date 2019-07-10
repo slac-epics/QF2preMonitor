@@ -17,6 +17,7 @@ DB += QF2preMonitorLCLS2.db
 DB += QF2preAlarmLCLS2PRC.db
 DB += QF2preAlarmLCLS2RFS.db
 DB += perQF2preAlarmLCLS2.template
+DB += QF2preUtilityLCLS2.db
 
 #----------------------------------------------------
 # If <anyname>.db template is not named <anyname>*.template add

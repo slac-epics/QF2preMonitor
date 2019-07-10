@@ -1,5 +1,5 @@
 /*
- * QF2pre board monitors
+ * QF2pre board monitors and board firmware information/control
  */
 #include <string.h>
 #include <epicsStdio.h>
@@ -15,16 +15,19 @@
 #include <drvAsynIPPort.h>
 
 #define QF2PRE_MONITOR_UDP_PORT     50001
+#define QF2PRE_UTILITY_UDP_PORT     50000
 
 #define QF2PRE_MONITOR_TX_COUNT     (2*63)
 #define QF2PRE_MONITOR_RX_CAPACITY  500
+
+#define QF2PRE_UTILITY_TX_COUNT     1
 
 #define COMMAND_RETRY_LIMIT         4
 
 #define ASYN_SUBADDRESS_STATISTICS  0x2000
 
 /*
- * ASYN subaddress decoding
+ * Int32 ASYN subaddress decoding
  * Short: Least significant 12 bits are index into received packet.
  *        Next three bits are number of valid bits in high byte, minus 1.
  *        Next bit is set if value is signed.
@@ -36,6 +39,18 @@
 #define A_IS_SIGNED(a)   ((a) & 0x8000)
 # define A_HIGH_COUNT(a) ((((a) >> 12) & 0x7) + 1)
 #define A_INDEX(a)       ((a) & 0xFFF)
+
+/* 	Octet ASYN subaddress decoding
+ *  Least significant 7 bits are index into received packet.
+ *        Next 7 bits are byt length.
+ *        Last 2 bits give additional information:
+ *           Value of 0: QF2pre provides seconds since epoch, convert to UTC date string
+ *           Value of 0: inverted order byte array waveform
+ */
+#define A_OFFSET(a)  ((a) & 0x7F)
+#define A_NBYTES(a)  (((a) & 0x3F80) >> 7 )
+#define A_IS_DATESTR(a)       ((((a) & 0xC000) >> 14) == 0 )
+#define A_IS_INVHEXTOASCII(a) ((((a) & 0xC000) >> 14) == 1 )
 
 /*
  * Link to lower port
@@ -70,6 +85,7 @@ typedef struct drvPvt {
      * I/O buffers
      */
     const char      txBuf[QF2PRE_MONITOR_TX_COUNT];
+	size_t 			txLen;
     char            rxBuf[QF2PRE_MONITOR_RX_CAPACITY];
     int             rxFullWarned;
 
@@ -99,7 +115,7 @@ processSystemMonitorPacket(drvPvt *pdpvt, int nRead)
     interruptNode *pnode;
     epicsTimeStamp now;
 
-
+	/* Process Int32 record I/O */
     epicsTimeGetCurrent(&now);
     if (nRead >= 2) byteReverse(pdpvt->rxBuf, nRead);
     pasynManager->interruptStart(pdpvt->asynInt32InterruptPvt, &pclientList);
@@ -137,6 +153,57 @@ processSystemMonitorPacket(drvPvt *pdpvt, int nRead)
                                                      value);
     }
     pasynManager->interruptEnd(pdpvt->asynInt32InterruptPvt);
+
+	/* Process Octet record I/O */
+	pasynManager->interruptStart(pdpvt->asynOctetInterruptPvt, &pclientList);
+	pnode = (interruptNode *)ellFirst(pclientList);
+	while (pnode) {
+		asynOctetInterrupt *octetInterrupt = pnode->drvPvt;
+		unsigned int a = octetInterrupt->addr;
+		size_t size = 1, nbytes = A_NBYTES(a);
+		int offset = A_OFFSET(a);
+		char buf[nbytes*2];
+		int reason = 0;
+		unsigned long val = 0;
+		int i;
+		struct tm *ts;
+
+		pnode = (interruptNode *)ellNext(&pnode->node);
+		octetInterrupt->pasynUser->auxStatus = asynSuccess;
+
+	if ((offset+nbytes) < nRead) {
+		if ( A_IS_DATESTR(a) ) {
+			size = MAX_STRING_SIZE;
+			for ( i = 0; i < nbytes; i++ ) {
+				val += (0xFF & pdpvt->rxBuf[i+offset]) << (i*8);
+			}
+			ts = gmtime((const time_t *)&val); /* Use UTC for consistency with QF2pre software tools */
+			strftime(buf, size, "%Y-%m-%d %H:%M:%S", ts);
+		}
+		else if ( A_IS_INVHEXTOASCII(a) ) {
+			size = nbytes*2 + 1;
+			for ( i = 0; i < nbytes; i++ ) {
+				sprintf(&buf[2*i],   "%x", (0xF0 & pdpvt->rxBuf[offset+nbytes-i]) >> 4);
+				sprintf(&buf[2*i+1], "%x",  0xF  & pdpvt->rxBuf[offset+nbytes-i]);
+			}
+			buf[(2*i)+1] = '\0';
+		}
+		else {
+			octetInterrupt->pasynUser->auxStatus = asynError;
+		}
+	}
+	else {
+		octetInterrupt->pasynUser->auxStatus = asynError;
+	}
+	if ( octetInterrupt->pasynUser->auxStatus == asynError ) {
+		buf[0] = 0;
+	}
+	octetInterrupt->pasynUser->timestamp = now;
+	octetInterrupt->callback(octetInterrupt->userPvt,
+		octetInterrupt->pasynUser,
+		buf, size, reason);
+	}
+	pasynManager->interruptEnd(pdpvt->asynOctetInterruptPvt);
 }
 
 /*
@@ -182,6 +249,36 @@ static asynOctet octetMethods = { NULL, NULL };
  * asynInt32 methods
  */
 static asynStatus
+int32Write(void *pvt, asynUser *pasynUser, epicsInt32 value)
+{
+	drvPvt *pdpvt = (drvPvt *)pvt;
+	asynStatus status;
+	int address;
+	size_t nWrite;
+	int retry = 0;
+
+	/* Command contains single byte */
+	const char txChar = (0xFF & value);
+
+	if ((status = pasynManager->getAddr(pasynUser, &address)) != asynSuccess)
+		return status;
+
+	for (;;) {
+
+		status = pasynOctetSyncIO->write(pdpvt->udpLink.pasynUser,
+				&txChar, sizeof( txChar ), 1.0, &nWrite);
+		if (status == asynSuccess) {
+			pdpvt->commandCount[retry]++;
+			break;
+		}
+		if (++retry > COMMAND_RETRY_LIMIT) {
+			pdpvt->commandFailedCount++;
+			break;
+		}
+	}
+	return status;
+}
+static asynStatus
 int32Read(void *pvt, asynUser *pasynUser, epicsInt32 *value)
 {
     drvPvt *pdpvt = (drvPvt *)pvt;
@@ -205,7 +302,7 @@ int32Read(void *pvt, asynUser *pasynUser, epicsInt32 *value)
     }
     for (;;) {
         status = pasynOctetSyncIO->writeRead(pdpvt->udpLink.pasynUser,
-                         pdpvt->txBuf, sizeof pdpvt->txBuf,
+                         pdpvt->txBuf, pdpvt->txLen,
                          pdpvt->rxBuf, sizeof pdpvt->rxBuf,
                          1.0,
                          &nWrite, &nRead, &eomReason);
@@ -228,10 +325,10 @@ int32Read(void *pvt, asynUser *pasynUser, epicsInt32 *value)
     processSystemMonitorPacket(pdpvt, (status == asynSuccess) ? nRead : -1);
     return status;
 }
-static asynInt32 int32Methods = { NULL, int32Read };
+static asynInt32 int32Methods = { int32Write, int32Read };
 
 static void
-qf2preMonConfigure(const char *portName, const char *hostInfo, int priority)
+qf2preMonConfigure(const char *portName, const char *hostInfo, int priority, int portNumber)
 {
     drvPvt *pdpvt;
     asynStatus status;
@@ -279,7 +376,7 @@ qf2preMonConfigure(const char *portName, const char *hostInfo, int priority)
     i = strlen(hostInfo) + 20;
     pdpvt->udpLink.hostName = callocMustSucceed(1, i, "qf2preMonConf");
     sprintf(pdpvt->udpLink.hostName, "%s:%d UDP", hostInfo,
-                                                       QF2PRE_MONITOR_UDP_PORT);
+                                                       portNumber);
     drvAsynIPPortConfigure(pdpvt->udpLink.portName, 
                            pdpvt->udpLink.hostName, priority, 0, 1);
     status = pasynOctetSyncIO->connect(pdpvt->udpLink.portName, -1,
@@ -288,6 +385,13 @@ qf2preMonConfigure(const char *portName, const char *hostInfo, int priority)
         printf("Can't connect to \"%s\"\n", pdpvt->udpLink.portName);
         return;
     }
+
+	if (portNumber == QF2PRE_UTILITY_UDP_PORT) {
+		pdpvt->txLen = QF2PRE_UTILITY_TX_COUNT;
+	}
+	else {
+		pdpvt->txLen = sizeof pdpvt->txBuf;
+	}
 
     /*
      * Create our port
@@ -337,6 +441,7 @@ qf2preMonConfigure(const char *portName, const char *hostInfo, int priority)
 
 /*
  * IOC shell command registration
+ * 
  */
 static const iocshArg monCnfgArg0 ={ "port",     iocshArgString};
 static const iocshArg monCnfgArg1 ={ "address",  iocshArgString};
@@ -347,12 +452,20 @@ static const iocshFuncDef qf2preMonCnfgFuncDef =
                                   {"qf2preMonitorConfigure", 3, monCnfgArgs};
 static void qf2preMonCnfgCallFunc(const iocshArgBuf *args)
 {
-    qf2preMonConfigure(args[0].sval, args[1].sval, args[2].ival);
+    qf2preMonConfigure(args[0].sval, args[1].sval, args[2].ival, QF2PRE_MONITOR_UDP_PORT);
+}
+
+static const iocshFuncDef qf2preUtilCnfgFuncDef =
+                                  {"qf2preUtilityConfigure", 3, monCnfgArgs};
+static void qf2preUtilCnfgCallFunc(const iocshArgBuf *args)
+{
+    qf2preMonConfigure(args[0].sval, args[1].sval, args[2].ival, QF2PRE_UTILITY_UDP_PORT);
 }
 
 static void
 qf2preMonitorRegisterCommands(void)
 {
     iocshRegister(&qf2preMonCnfgFuncDef, qf2preMonCnfgCallFunc);
+    iocshRegister(&qf2preUtilCnfgFuncDef, qf2preUtilCnfgCallFunc);
 }
 epicsExportRegistrar(qf2preMonitorRegisterCommands);

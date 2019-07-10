@@ -59,7 +59,7 @@
     </h2>
     These analog-in records must have SCAN="I/O Intr"and should have
     TSE="-2" to ensure that all receive the time stamp of the arrival of
-    the readback packet.&nbsp;&nbsp; The least significant 8 bits of the
+    the readback packet.&nbsp;&nbsp; The least significant 12 bits of the
     ASYN subaddress are the&nbsp; index into the received packet of the
     most significant byte of the value.&nbsp; The least significant byte
     of the value is the following byte.&nbsp; The next three bits of the
@@ -313,11 +313,11 @@
 
     These analog-in records must have SCAN="I/O Intr"and should have
     TSE="-2" to ensure that all receive the time stamp of the arrival of
-    the readback packet.&nbsp;&nbsp; The least significant 8 bits of the
+    the readback packet.&nbsp;&nbsp; The least significant 12 bits of the
     ASYN subaddress are the&nbsp; index into the received packet of the 
 value. The next three bits of the
-    subaddress are the number of of the bit (0 is least 
-significant).&nbsp; The next bit is unused and the next four are set to 
+    subaddress are the number of the bit (0 is least 
+significant).&nbsp; The next bit is unused and the next bit is set to 
 0001 to indicate this is a Boolean value.<br>
 <br>
 
@@ -450,5 +450,161 @@ significant).&nbsp; The next bit is unused and the next four are set to
     </ol>
     <p></p>
   
+    <h1>Board Firmware/Reboot Control</h1>
+	Independent of the board health monitoring interface (described above), you may
+	create an interface to read board ID/firmware information and to reboot the board. This interface
+	uses the same mechanisms as the health monitoring interface but communicates via a different UDP port.
+	(This interface is referred to as 'Utility' or 'Util' in the documentation, code, and databases.)
+	To use this, make the following additions to the IOC startup file:
+		
+      <li><a name="Utility qf2preMonitorConfigure"></a>Add a <tt>qf2preUtilityConfigure</tt>
+        command for each QF2pre module, with arguments:<br>
+        <ol>
+          <li>The ASYN port name. This name *must* be distinct from the port name used for the health monitoring interface. </li>
+          <li>The IPv4 address of the QF2pre module.</li>
+          <li>The priority at which the port threads will run.&nbsp; A
+            value of 0 confirms the default medium
+            priority.</li>
+        </ol>
+      </li>
+      <li> Load a database file or files describing the records
+        associated with the QF2pre board utility support.&nbsp; Set the $(PORT) macro
+        to the ASYN port name given in the utility QF2preMonitor command and
+        specify the $(P) and&nbsp; $(R) macros to ensure unique record
+        names.<br>
+      </li>
+<h2>Board Utility Booleans<br>
+    </h2>
 
+    These analog-in records must have SCAN="I/O Intr"and should have
+    TSE="-2" to ensure that all receive the time stamp of the arrival of
+    the readback packet.&nbsp;&nbsp; The least significant 12 bits of the
+    ASYN subaddress are the&nbsp; index into the received packet of the value. 
+	The next three bits of the subaddress are the number of the bit (0 is least 
+	significant).&nbsp; The next bit is unused and the next bit is set to 
+	0001 to indicate this is a Boolean value.<br>
+<br>
+    
+<table style=" text-align: left; width: 80%; margin-left: auto; margin-right: auto;" border="1" cellspacing="2" cellpadding="2">
+
+      <tbody>
+        <tr>
+          <td style="text-align: center;"><span style="font-weight:
+              bold;">Name</span><br>
+          </td>
+          <th style="text-align: center;">ASYN<br>
+            Subaddress<br>
+          </th>
+          <th style="vertical-align: middle; text-align: center;">Description<br>
+          </th>
+        </tr>
+        <tr>
+          <td style="text-align: center;" valign="middle" align="center">Type</td>
+          <td style="text-align: center;" valign="middle" align="center">0x00001
+          </td>
+          <td style="vertical-align: middle; height: 2px; text-align: left;">Board type, QF2-pre or BMB7.</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;" valign="middle" align="center">FwActive</td>
+          <td style="text-align: center;" valign="middle" align="center">0x00002
+          </td>
+          <td style="vertical-align: middle; height: 2px; text-align: left;">Active firmware, bootloader or runtime.</td>
+        </tr>
+        
+      </tbody>
+    
+</table>
+
+<h2>Board Utility Waveforms/Strings<br>
+    </h2>
+
+    These waveform records must have SCAN="I/O Intr"and should have
+    TSE="-2" to ensure that all receive the time stamp of the arrival of
+    the readback packet.&nbsp;&nbsp; The least significant 7 bits of the 
+	ASYN subaddress are the byte index into received packet. The next 7 bits 
+	are the byte length. The last 2 bits give additional information:
+        <li>
+          Value of 0: QF2pre provides seconds since epoch, convert to UTC date string. (Use UTC for consistency with QF2pre python tools.)
+        </li>
+        <li>
+          Value of 1: Inverted order byte array waveform, convert to ASCII. 
+        </li>
+<br>
+<br>
+    
+<table style=" text-align: left; width: 80%; margin-left: auto; margin-right: auto;" border="1" cellspacing="2" cellpadding="2">
+
+      <tbody>
+        <tr>
+          <td style="text-align: center;"><span style="font-weight:
+              bold;">Name</span><br>
+          </td>
+          <th style="text-align: center;">ASYN<br>
+            Subaddress<br>
+          </th>
+          <th style="vertical-align: middle; text-align: center;">Description<br>
+          </th>
+        </tr>
+        <tr>
+          <td style="text-align: center;" valign="middle" align="center">BootldrFwDate</td>
+          <td style="text-align: center;" valign="middle" align="center">0x403
+          </td>
+          <td style="vertical-align: middle; height: 2px; text-align: left;">Bootloader FW build date.</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;" valign="middle" align="center">RuntimeFwDate</td>
+          <td style="text-align: center;" valign="middle" align="center">0x42B
+          </td>
+          <td style="vertical-align: middle; height: 2px; text-align: left;">Runtime FW build date.</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;" valign="middle" align="center">BootldrFwHash</td>
+          <td style="text-align: center;" valign="middle" align="center">0x500A
+          </td>
+          <td style="vertical-align: middle; height: 2px; text-align: left;">Bootloader FW SHA256</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;" valign="middle" align="center">RuntimeFwHash</td>
+          <td style="text-align: center;" valign="middle" align="center">0x5032
+          </td>
+          <td style="vertical-align: middle; height: 2px; text-align: left;">Runtime FW SHA256</td>
+        </tr>
+        
+      </tbody>
+    
+</table>
+
+<h2>Board Utility Discrete Outputs<br>
+    </h2>
+
+    This multi-bit binary output record, currently implemented, sends a single byte to the
+	utility UDP port, so the mbbo 'VL' field values must be <= 255. The asyn address is 0.
+<br>
+<br>
+    
+<table style=" text-align: left; width: 80%; margin-left: auto; margin-right: auto;" border="1" cellspacing="2" cellpadding="2">
+
+      <tbody>
+        <tr>
+          <td style="text-align: center;"><span style="font-weight:
+              bold;">Name</span><br>
+          </td>
+          <th style="text-align: center;">ASYN<br>
+            Subaddress<br>
+          </th>
+          <th style="vertical-align: middle; text-align: center;">Description<br>
+          </th>
+        </tr>
+        <tr>
+          <td style="text-align: center;" valign="middle" align="center">Boot</td>
+          <td style="text-align: center;" valign="middle" align="center">0
+          </td>
+          <td style="vertical-align: middle; height: 2px; text-align: left;">Reboot board to specified firmware: Value of 0 for runtime FW. Value of 1 for bootloader FW.</td>
+        </tr>        
+      </tbody>
+    
+</table>
+
+<br>
+<br>
 </body></html>

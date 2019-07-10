@@ -1,3 +1,22 @@
+Release: R0.1.0
+	Add support for board and firmware information and
+		control, called QF2preUtility or QF2preUtil in 
+		supporting code and files.
+		QF2preMonitorApp:
+			Modified:
+				src/QF2preMonitor.c
+				Db/Makefile,
+				   perQF2preBoolean.template
+			New:
+				Db/perQF2preMbbo.template,
+					perQF2preString.template,
+					perQF2preWaveform.template,
+					QF2preUtilityLCLS2.substitutions
+
+		Documentation/QF2preMonitor.html:
+			Add section for QF2preUtility
+			Fixes to QF2preMonitor asyn subaddressing description
+
 Release: R0.0.2
 	 Add LCLS-II LLRF chassis-specific alarm summaries. 
 		QF2preMonitorApp/Db:
