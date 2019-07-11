@@ -59,6 +59,6 @@ file "perQF2preWaveform.template"
 # VL field value must be <= 255 (single char) 
 file "perQF2preMbbo.template"
 { pattern
-{    P,        R,     PORT,				NAME,	A,	 ZRST,		ZRVL,	ONST,		ONVL,	DESC			}
+{    P,        R,     PORT,			NAME,	A,	 ONST,		ONVL,	ZRST,			ZRVL,	DESC			}
 {"\$(P)","\$(R)QF2_","\$(PORT)", "Boot",	0,	"Runtime",	"0x81",	"Bootloader",	"0x1",	"Reboot board"	}
 }
