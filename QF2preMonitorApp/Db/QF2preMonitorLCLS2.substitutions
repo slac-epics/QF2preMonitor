@@ -43,7 +43,7 @@ file "perQF2preMonitor.template"
 {"\$(P)","\$(R)QF2_","\$(PORT)","BoardTemp",	F002,	  "DegC", 3.90625e-3,      0,    1,    0,   50,   60, "Board temp"		 }
 {"\$(P)","\$(R)QF2_","\$(PORT)","TopFMCVadj", 	7004,        "V",  7.8125e-5,      0, 2.25, 2.40, 2.60, 2.75, "Top FMC Vadj supply V"	 }
 {"\$(P)","\$(R)QF2_","\$(PORT)","FMC3_3V", 	7006,        "V" , 7.8125e-5,      0,  3.1, 3.15, 3.45,  3.5, "FMC cards 3.3V supply V"	 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","FMC6V", 	7008,        "V", 4.2969e-04,      0,  5.8,  6.0   7.0,  7.5, "FMC cards 6V supply V"	 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","FMC6V", 	7008,        "V", 4.2969e-04,      0,  5.7,  5.9   8.0,  8.2, "FMC cards 6V supply V"	 }
 {"\$(P)","\$(R)QF2_","\$(PORT)","BtmFMCVadj", 	700A,        "V", 3.90625e-5,      0,  1.6,  1.7,  1.9,  2.0, "Bottom FMC Vadj supply V" }
 {"\$(P)","\$(R)QF2_","\$(PORT)","LM4628Temp",	700C,	  "DegC",-0.01698369565,236.956521, 1, 0,   60,   65, "LM4628 V-regulator temp"  }
 {"\$(P)","\$(R)QF2_","\$(PORT)","Main3_3V", 	700E,        "V",  7.8125e-5,      0,  3.1, 3.15, 3.45,  3.5, "Main 3.3V supply V"	 }
