@@ -1,3 +1,12 @@
+Release: R0.1.1
+	QF2preMonitorApp/Db/QF2preMonitorLCLS2.substitutions
+		Alarm limit adjustments for
+			FMC6V
+			Board6V
+			BoardI
+	QF2preMonitorApp/Db/QF2preUtilityLCLS2.substitutions
+		Swap bootloader/runtime value (0/1) assignments
+
 Release: R0.1.0
 	Add support for board and firmware information and
 		control, called QF2preUtility or QF2preUtil in 
