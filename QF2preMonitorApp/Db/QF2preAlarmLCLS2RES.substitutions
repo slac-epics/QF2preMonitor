@@ -1,0 +1,15 @@
+# Alarm summary for LLRF RES QF2pre
+#
+# LCLS-II Conventions:
+# For Superconducting RF systems:
+#   P=Cryomodule name with terminating colon, 
+#   		 ex. ACCL:L1B:0200:
+#   R=Chassis name with terminating colon,
+#   	         ex. PRCA
+#
+
+file "perQF2preAlarmLCLS2.template"
+{ pattern
+{    P,      R,      INP1,					INP2,				INP3,            INP4          }
+{"\$(P)","\$(R)QF2_","\$(P)\$(R)QF2_QSFP2RxPwr1.SEVR MSS","\$(P)\$(R)QF2_QSFP2RxPwr2.SEVR MSS","\$(P)\$(R)QF2_QSFP2Temp.SEVR MSS","\$(P)\$(R)QF2_QSFP2RxPwr3.SEVR MSS" }
+}

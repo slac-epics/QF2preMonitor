@@ -14,10 +14,15 @@ DB += QF2preMonitor.db
 
 # Using LCLS-II conventions
 DB += QF2preMonitorLCLS2.db
-DB += QF2preAlarmLCLS2PRC.db
-DB += QF2preAlarmLCLS2RFS.db
 DB += perQF2preAlarmLCLS2.template
 DB += QF2preUtilityLCLS2.db
+# Alarms for LLRF Rack only
+DB += QF2preAlarmLCLS2PRC.db
+DB += QF2preAlarmLCLS2RFS.db
+# Alarms for full LLRF system with external fiber connections
+DB += QF2preAlarmLCLS2PRCFull.db
+DB += QF2preAlarmLCLS2RFSFull.db
+DB += QF2preAlarmLCLS2RESFull.db
 
 #----------------------------------------------------
 # If <anyname>.db template is not named <anyname>*.template add
