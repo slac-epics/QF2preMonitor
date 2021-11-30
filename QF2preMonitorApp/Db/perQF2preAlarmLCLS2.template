@@ -41,10 +41,32 @@ record(calc, "$(P)$(R)Alarm2") {
     field(INPJ, "$(INP1=)")
     field(INPK, "$(INP2=)")
     field(INPL, "$(INP3=)")
+    field(FLNK, "$(P)$(R)Alarm3")
+}
+
+record(calc, "$(P)$(R)Alarm3") {
+    field(DESC, "QF2 alarm summary")
+# CALC must do something with all inputs to run the MS logic
+# VAL is not used
+    field(CALC, "A")
+    field(INPA, "$(P)$(R)Alarm2.SEVR MSS")
+# Additional optional per-chassis inputs. 
+# Likely used for SFP power levels.
+    field(INPB, "$(INP4=)")
+    field(INPC, "$(INP5=)")
+    field(INPD, "$(INP6=)")
+    field(INPE, "$(INP7=)")
+    field(INPF, "$(INP8=)")
+    field(INPG, "$(INP9=)")
+    field(INPH, "$(INP10=)")
+    field(INPI, "$(INP11=)")
+    field(INPJ, "$(INP12=)")
+    field(INPK, "$(INP13=)")
+    field(INPL, "$(INP14=)")
     field(FLNK, "$(P)$(R)AlarmSum")
 }
 
 record(stringin, "$(P)$(R)AlarmSum") {
     field(DESC, "QF2 alarm summary")
-    field(INP , "$(P)$(R)Alarm2.SEVR MSS")
+    field(INP , "$(P)$(R)Alarm3.SEVR MSS")
 }
