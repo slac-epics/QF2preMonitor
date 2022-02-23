@@ -23,7 +23,7 @@
 # the CONFIG_SITE file.
 
 # Required
-#BUSY = /path/to/busy
+BUSY = $(EPICS_MODULES)/busy/R1.7.2.1-0.1.2
 
 # EPICS_BASE should appear last so earlier modules can override stuff:
 #EPICS_BASE = /usr/lib/epics

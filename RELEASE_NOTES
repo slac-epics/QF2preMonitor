@@ -1,3 +1,7 @@
+Release: R0.1.2
+	egumtow 2/22/2022
+	update modules to asyn/R4.39-1.0.1, busy/R1.7.2.1-0.1.2
+
 Release: R0.1.1
 	QF2preMonitorApp/Db/QF2preMonitorLCLS2.substitutions
 		Alarm limit adjustments for
