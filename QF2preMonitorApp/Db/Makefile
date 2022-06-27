@@ -16,6 +16,10 @@ DB += QF2preMonitor.db
 DB += QF2preMonitorLCLS2.db
 DB += perQF2preAlarmLCLS2.template
 DB += QF2preUtilityLCLS2.db
+
+# QSFP v3+ support (work in progress)
+DB += QF2preUtilityLCLS2_v3.db
+
 # Alarms for LLRF Rack only
 DB += QF2preAlarmLCLS2PRC.db
 DB += QF2preAlarmLCLS2RFS.db
