@@ -23,6 +23,7 @@ DB += QF2preUtilityLCLS2_v3.db
 # Alarms for LLRF Rack only
 DB += QF2preAlarmLCLS2PRC.db
 DB += QF2preAlarmLCLS2RFS.db
+DB += QF2preAlarmLCLS2RES.db
 # Alarms for full LLRF system with external fiber connections
 DB += QF2preAlarmLCLS2PRCFull.db
 DB += QF2preAlarmLCLS2RFSFull.db

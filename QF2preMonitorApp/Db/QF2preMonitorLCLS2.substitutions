@@ -73,14 +73,14 @@ file "perQF2preMonitor.template"
 {"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1RxPwr2", 	7076,       "uWatts",    0.1,      0,  10,  30,  1950, 2000, "$(QSFP1_2DESC\=QSFP1 power 2)"}
 {"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1RxPwr3", 	7074,       "uWatts",    0.1,      0,  10,  30,  1950, 2000, "$(QSFP1_3DESC\=QSFP1 power 3)"}
 {"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1RxPwr4", 	7072,       "uWatts",    0.1,      0,  10,  30,  1950, 2000, "$(QSFP1_4DESC\=QSFP1 power 4)"}
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1Temp", 	F066,     "DegC", 3.90625e-3,      0,    0,    1,   65,   70, "QSFP1 temp"		 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1V", 	7068,        "V",     1.0e-4,      0,  3.0, 3.15, 3.45,  3.6, "QSFP1 V"			 }
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1Temp", 	F066,     "DegC", 3.90625e-3,      0,    0,    1,   65,   70, "$(QSFP1_TEMPDESC\=QSFP1 temp)"}
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP1V", 	7068,        "V",     1.0e-4,          0,  3.0, 3.15, 3.45,  3.6, "$(QSFP1_VDESC\=QSFP1 V)"}
 {"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2RxPwr1", 	708F,       "uWatts",    0.1,      0,  10,  30,  1950, 2000, "$(QSFP2_1DESC\=QSFP2 power 1)"}
 {"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2RxPwr2", 	708D,       "uWatts",    0.1,      0,  10,  30,  1950, 2000, "$(QSFP2_2DESC\=QSFP2 power 2)"}
 {"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2RxPwr3", 	708B,       "uWatts",    0.1,      0,  10,  30,  1950, 2000, "$(QSFP2_3DESC\=QSFP2 power 3)"}
 {"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2RxPwr4", 	7089,       "uWatts",    0.1,      0,  10,  30,  1950, 2000, "$(QSFP2_4DESC\=QSFP2 power 4)"}
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2Temp", 	F07D,     "DegC", 3.90625e-3,      0,    0,    1,   65,   70, "QSFP2 temp"		 }
-{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2V", 	707F,        "V",     1.0e-4,      0,  3.0, 3.15, 3.45,  3.6, "QSFP2 V"		 	 }	             
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2Temp", 	F07D,     "DegC", 3.90625e-3,      0,    0,    1,   65,   70, "$(QSFP2_TEMPDESC\=QSFP2 temp)"}
+{"\$(P)","\$(R)QF2_","\$(PORT)","QSFP2V", 	707F,        "V",     1.0e-4,      0,  3.0, 3.15, 3.45,  3.6, "$(QSFP2_VDESC\=QSFP2 V)"}
 }			        
 			    
 file "perQF2preBoolean.template"

@@ -1,7 +1,10 @@
 Release: R0.1.4
 	sonya 5/10/2023
-    For LCLS2 systems, lower QSFP power alarm/warning thresholds
-      and add optional macro for power sensor description
+    For LCLS2 systems:
+      -lower QSFP power alarm/warning thresholds
+      -add optional macro for QSFP power, temp. voltage
+         sensor descriptions
+      -add QSFP voltage to alarm summary databases
 
 Release: R0.1.3
 	sonya 2/02/2023
