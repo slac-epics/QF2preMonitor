@@ -1,3 +1,7 @@
+Release: R0.1.6
+    lorelli 06/16/2025
+    Fixed buffer overrun in processSystemMonitorPacket (#1)
+
 Release: R0.1.5
     lorelli 11/15/2024
     Update to asyn/R4.39-1.0.2
