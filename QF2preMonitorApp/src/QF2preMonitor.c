@@ -162,7 +162,7 @@ processSystemMonitorPacket(drvPvt *pdpvt, int nRead)
 		unsigned int a = octetInterrupt->addr;
 		size_t size = 1, nbytes = A_NBYTES(a);
 		int offset = A_OFFSET(a);
-		char buf[nbytes*2];
+		char buf[nbytes*2+1];
 		int reason = 0;
 		unsigned long val = 0;
 		int i;
